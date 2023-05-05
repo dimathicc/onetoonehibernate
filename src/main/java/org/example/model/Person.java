@@ -21,9 +21,8 @@ public class Person {
     @Column(name = "age")
     private int age;
 
-    @OneToMany(mappedBy = "owner", cascade = CascadeType.PERSIST)
-    private List<Item> items;
-
+    @OneToOne(mappedBy = "person", cascade = CascadeType.PERSIST)
+    private Passport passport;
 
     public Person() {
     }
@@ -57,28 +56,22 @@ public class Person {
         this.id = id;
     }
 
-    public List<Item> getItems() {
-        return items;
+    public Passport getPassport() {
+        return passport;
     }
 
-    public void setItems(List<Item> items) {
-        this.items = items;
-    }
-
-    public void addItem(Item item) {
-        if (this.items == null)
-            this.items = new ArrayList<>();
-
-        this.items.add(item);
-        item.setOwner(this);
+    public void setPassport(Passport passport) {
+        this.passport = passport;
+        passport.setPerson(this);
     }
 
     @Override
     public String toString() {
         return "Person{" +
-                "id - " + id +
-                ", name - '" + name + '\'' +
-                ", age - " + age +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", age=" + age +
+                ", passport=" + passport +
                 '}';
     }
 }
